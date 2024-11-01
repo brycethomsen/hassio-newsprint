@@ -1,9 +1,16 @@
+#!/usr/bin/env python
+
 import feedparser
 from jinja2 import Environment, FileSystemLoader
 from datetime import datetime
 from bs4 import BeautifulSoup
 import re
 import textwrap
+
+import asyncio
+
+from pyipp import IPP
+from pyipp.enums import IppOperation
 
 # Load the Jinja2 template
 env = Environment(loader=FileSystemLoader("."))
@@ -46,6 +53,28 @@ def wrap_summary(text, max_length, max_lines):
         wrapped_text = "\n".join(lines)  # No truncation, return full wrapped text
 
     return wrapped_text
+
+async def main() -> None:
+    """Show example of printing via IPP print server."""
+    loop = asyncio.get_running_loop()
+    pdf_file = "/Users/bryce/Downloads/test.jpeg"
+    with open(pdf_file, "rb") as f:  # noqa: PTH123, ASYNC230
+        content = f.read()
+
+    async with IPP("ipp://192.168.1.110:631/ipp/print") as ipp:
+        response = await ipp.execute(
+            IppOperation.PRINT_JOB,
+            {
+                "operation-attributes-tag": {
+                    "requesting-user-name": "Me",
+                    "job-name": "My Test Job",
+                    "document-format": "image/jpeg",
+                },
+                "data": content,
+            },
+        )
+
+        print(response)
 
 for feed_url in feed_urls:
     # Parse the RSS feed
@@ -124,4 +153,12 @@ if len(output) > max_page_length:
 with open("newspaper_page.txt", "w") as f:
     f.write(output)
 
-print(output)
+# print(output)
+pdf_file = "/Users/bryce/git/brycethomsen/newsprint/newsprint/newspaper_page.txt"
+with open(pdf_file, "r") as f:  # noqa: PTH123, ASYNC230
+    content = f.read()
+    
+print(content)
+
+# loop = asyncio.get_event_loop()
+# asyncio.run(main())
