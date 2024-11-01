@@ -1,0 +1,10 @@
+configuration:
+  printer:
+    name: Printer
+    description: IP address of your IPP capabale printer
+  rss:
+    name: RSS
+    description: RSS feeds to use for your "newspaper"
+  debug:
+    name: Debug
+    description: Enable debug mode

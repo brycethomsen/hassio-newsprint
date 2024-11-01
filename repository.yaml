@@ -1,0 +1,3 @@
+name: Home Assistant addon to print RSS articles to a physical printer
+url: https://github.com/brycethomsen/hassio-newsprint
+maintainer: Bryce Thomsen
