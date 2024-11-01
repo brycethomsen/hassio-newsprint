@@ -4,7 +4,7 @@ A Home Assistant addon to print selected RSS articles from an actual printer.
 
 **NOTE: This addon assumes your printer is IPP capable and supports *image/jpeg* *document-format*.**
 
-My printer did not support *application/pdf*; you can check yours by running [info.py](newsprint/info.py) and looking at *document-format-supported*.
+My printer did not support *application/pdf* or *text/plain*; you can check yours by running [info.py](newsprint/info.py) and looking at *document-format-supported*.
 
 ## Installation
 
